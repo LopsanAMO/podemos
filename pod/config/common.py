@@ -28,7 +28,10 @@ class Common(Configuration):
 
         # Your apps
         'pod.apps.users',
-
+        'pod.apps.accounts',
+        'pod.apps.groups',
+        'pod.apps.payments',
+        'pod.apps.transactions',
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/

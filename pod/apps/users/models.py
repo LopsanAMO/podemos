@@ -8,7 +8,10 @@ from rest_framework.authtoken.models import Token
 
 
 class User(AbstractUser):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    class Meta:
+        db_table = 'Clientes'
+
+    id = models.CharField(primary_key=True, default=str(uuid.uuid4())[-8:-1].upper(), editable=False, max_length=7)
 
     def __str__(self):
         return self.username
