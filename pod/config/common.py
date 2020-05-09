@@ -1,9 +1,13 @@
 import os
+import environ
 from os.path import join
 from distutils.util import strtobool
-import dj_database_url
 from configurations import Configuration
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from unipath import Path
+
+BASE_DIR = environ.Path(__file__) - 3
+BASE_DIR.path('apps')
+ROOT_DIR = Path(__file__).ancestor(3)
 
 
 class Common(Configuration):
@@ -23,7 +27,7 @@ class Common(Configuration):
         'django_filters',            # for filtering rest endpoints
 
         # Your apps
-        'pod.users',
+        'pod.apps.users',
 
     )
 
@@ -32,6 +36,7 @@ class Common(Configuration):
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
@@ -40,7 +45,8 @@ class Common(Configuration):
 
     ALLOWED_HOSTS = ["*"]
     ROOT_URLCONF = 'pod.urls'
-    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+    CORS_ORIGIN_ALLOW_ALL = True
+    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', "DJANGO_SECRET_KEY")
     WSGI_APPLICATION = 'pod.wsgi.application'
 
     # Email
@@ -50,13 +56,6 @@ class Common(Configuration):
         ('Author', 'lopsan.molina@gmail.com'),
     )
 
-    # Postgres
-    DATABASES = {
-        'default': dj_database_url.config(
-            default='postgres://postgres:@postgres:5432/postgres',
-            conn_max_age=int(os.getenv('POSTGRES_CONN_MAX_AGE', 600))
-        )
-    }
 
     # General
     APPEND_SLASH = False
@@ -71,7 +70,7 @@ class Common(Configuration):
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/2.0/howto/static-files/
-    STATIC_ROOT = os.path.normpath(join(os.path.dirname(BASE_DIR), 'static'))
+    STATIC_ROOT = os.path.normpath(join(os.path.dirname(ROOT_DIR), 'static'))
     STATICFILES_DIRS = []
     STATIC_URL = '/static/'
     STATICFILES_FINDERS = (
@@ -80,7 +79,7 @@ class Common(Configuration):
     )
 
     # Media files
-    MEDIA_ROOT = join(os.path.dirname(BASE_DIR), 'media')
+    MEDIA_ROOT = join(os.path.dirname(ROOT_DIR), 'media')
     MEDIA_URL = '/media/'
 
     TEMPLATES = [

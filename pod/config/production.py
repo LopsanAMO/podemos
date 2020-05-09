@@ -1,10 +1,20 @@
 import os
 from .common import Common
+import dj_database_url
 
 
 class Production(Common):
     INSTALLED_APPS = Common.INSTALLED_APPS
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+
+    # Postgres
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='postgres://postgres:@postgres:5432/postgres',
+            conn_max_age=int(os.getenv('POSTGRES_CONN_MAX_AGE', 600))
+        )
+    }
+
     # Site
     # https://docs.djangoproject.com/en/2.0/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ["*"]

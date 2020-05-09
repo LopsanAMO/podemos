@@ -1,10 +1,20 @@
 import os
 from .common import Common
+from unipath import Path
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = Path(__file__).ancestor(3)
 
 
 class Local(Common):
     DEBUG = True
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(ROOT_DIR, 'db.sqlite3'),
+        }
+    }
 
     # Testing
     INSTALLED_APPS = Common.INSTALLED_APPS
