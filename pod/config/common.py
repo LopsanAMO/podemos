@@ -32,6 +32,7 @@ class Common(Configuration):
         'pod.apps.groups',
         'pod.apps.payments',
         'pod.apps.transactions',
+        'pod.apps.utils'
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
