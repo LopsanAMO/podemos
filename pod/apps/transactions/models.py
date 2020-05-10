@@ -11,7 +11,7 @@ class Transaction(models.Model):
     id = models.IntegerField(primary_key=True, default=int(str(uuid.uuid4().fields[-1])[:11]), editable=False)
     account = models.ForeignKey(Account, on_delete=models.CASCADE, db_column='cuenta_id')
     date = models.DateTimeField(db_column='fecha')
-    amount = models.CharField(max_length=50, db_column='monto')
+    amount = models.DecimalField(max_digits=15, decimal_places=2, db_column='monto')
 
     @classmethod
     def create(cls, *args):
