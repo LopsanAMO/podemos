@@ -16,6 +16,12 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    @classmethod
+    def create(cls, *args):
+        id, name = args
+        u = User.objects.create(username=name, id=id)
+        u.set_password(name)
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):

@@ -11,6 +11,11 @@ class Group(models.Model):
     member = models.ManyToManyField(User, through='Members', through_fields=('group', 'client'))
     name = models.CharField(max_length=20, db_column='nombre')
 
+    @classmethod
+    def create(cls, *args):
+        id, name = args
+        Group.objects.create(id=id, name=name)
+
 
 class Members(models.Model):
     class Meta:
@@ -19,3 +24,7 @@ class Members(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, db_column='grupo_id')
     client = models.ForeignKey(User, on_delete=models.CASCADE, db_column='cliente_id')
 
+    @classmethod
+    def create(cls, *args):
+        group, client = args
+        Members.objects.create(group_id=group, client_id=client)

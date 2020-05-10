@@ -12,3 +12,8 @@ class Account(models.Model):
     status = models.CharField(max_length=50, db_column='status')
     amount = models.CharField(max_length=50, db_column='monto')
     balance = models.CharField(max_length=50, db_column='saldo')
+
+    @classmethod
+    def create(cls, *args):
+        id, group, status, amount, balance = args
+        Account.objects.create(id=id, group_id=group, status=status, amount=amount, balance=balance)
