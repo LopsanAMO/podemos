@@ -12,6 +12,8 @@ ROOT_DIR = Path(__file__).ancestor(3)
 
 class Common(Configuration):
 
+    SIGNALS = True
+
     INSTALLED_APPS = (
         'django.contrib.admin',
         'django.contrib.auth',

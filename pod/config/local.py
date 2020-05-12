@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 from .common import Common
 from unipath import Path
 
@@ -9,12 +10,22 @@ ROOT_DIR = Path(__file__).ancestor(3)
 class Local(Common):
     DEBUG = True
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(ROOT_DIR, 'db.sqlite3'),
+    SQL_LITE_DATABASE = os.getenv('SQL_LITE_DATABASE', False)
+
+    if SQL_LITE_DATABASE:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(ROOT_DIR, 'db.sqlite3'),
+            }
         }
-    }
+    else:
+        DATABASES = {
+            'default': dj_database_url.config(
+                default='postgres://postgres:@postgres:5432/postgres',
+                conn_max_age=int(os.getenv('POSTGRES_CONN_MAX_AGE', 600))
+            )
+        }
 
     # Testing
     INSTALLED_APPS = Common.INSTALLED_APPS
