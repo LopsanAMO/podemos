@@ -3,8 +3,12 @@ branch = True
 omit = *migrations*,
        *urls*,
        *test*,
+       *apps.py*,
        *admin*,
+       *site-packages*,
        ./manage.py,
        ./pod/config/*,
        ./pod/wsgi.py,
-       *__init__*
+       *__init__*,
+       wait_for_postgres.py
+
