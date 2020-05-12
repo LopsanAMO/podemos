@@ -1,3 +1,4 @@
 from django.contrib import admin
+from pod.apps.payments.models import PaymentCalendar
 
-# Register your models here.
+admin.site.register(PaymentCalendar)
