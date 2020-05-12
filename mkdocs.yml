@@ -8,5 +8,7 @@ dev_addr: 0.0.0.0:8001
 nav:
   - Home: 'index.md'
   - API:
-    - Authentication: 'api/authentication.md'
-    - Users: 'api/users.md'
+    - Clientes: 'api/clients.md'
+    - Grupos: 'api/groups.md'
+    - Cuentas: 'api/accounts.md'
+    - Transacciones: 'api/transactions.md'
