@@ -1,4 +1,5 @@
 import factory
+from pod.apps.users.models import Client
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -16,3 +17,11 @@ class UserFactory(factory.django.DjangoModelFactory):
     last_name = factory.Faker('last_name')
     is_active = True
     is_staff = False
+
+
+class ClientFactor(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Client
+
+    name = factory.Faker('first_name')
+    id = factory.Sequence(lambda n: f'ABCD{n}')
