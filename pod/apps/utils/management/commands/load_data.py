@@ -2,8 +2,9 @@ import os
 import csv
 from enum import Enum
 from django.core.management.base import BaseCommand
+from django.test import override_settings
 from unipath import Path
-from pod.apps.users.models import User
+from pod.apps.users.models import Client
 from pod.apps.accounts.models import Account
 from pod.apps.groups.models import Members, Group
 from pod.apps.transactions.models import Transaction
@@ -14,7 +15,7 @@ ROOT_DIR = Path(__file__).ancestor(6)
 
 class Tables(Enum):
     calendariopagos = (PaymentCalendar, )
-    clientes = (User, )
+    clientes = (Client, )
     cuentas = (Account, )
     grupos = (Group, )
     miembros = (Members, )
@@ -37,6 +38,7 @@ class Command(BaseCommand):
                 _files.append('{}/data/{}{}'.format(ROOT_DIR,os.path.basename(root), f))
         return _files
 
+    @override_settings(SIGNALS=False)
     def handle(self, *args, **options):
         _list = ['clientes', 'grupos', 'miembros', 'cuentas', 'transacciones', 'calendariopagos']
         files = self.get_files()
@@ -56,6 +58,7 @@ class Command(BaseCommand):
                             if line_count == 0:
                                 pass
                             else:
+                                print(row)
                                 model.create(*row)
                             line_count += 1
                     files.remove(file)
