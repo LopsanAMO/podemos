@@ -1,6 +1,6 @@
 # podemos
 
-Repo [Github ](http://LopsanAMO.github.io/pod/).
+Repo [Github ](http://LopsanAMO.github.io/podemos/).
 
 # Prerequisites
 
